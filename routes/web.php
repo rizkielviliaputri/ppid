@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,10 +14,19 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
+Route::get('/admin', function () {
     return view('admin/layout/page');
 });
-Route::get('/admin', function () {
-    return view('admin/layout/admin');
-});
+// Route::get('/admin', function () {
+//     return view('admin/layout/admin');
+// });
 
+Auth::routes();
+
+Auth::routes(['verify' => true]);
+
+Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
